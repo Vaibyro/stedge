@@ -38,6 +38,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function circles() {
+        return $this->belongsToMany('App\Circle');
+    }
+
+    public function posts() {
+        return $this->hasMany('App\Post');
+    }
+
     public function setNewApiToken()
     {
         $this->api_token = Str::uuid();

@@ -4,7 +4,7 @@
     <div class="container-fluid light">
 
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col" style="-ms-flex: 0 0 300px; flex: 0 0 300px;">
                 <div class="p-1  mb-2" style="background-color: #e2ebf0; border-radius: 8px;">
                     <h5>Sujets</h5>
                     <ul>
@@ -21,8 +21,8 @@
                 </div>
             </div>
 
-            <div class="col-lg-9 p-3">
-                <posts-component></posts-component>
+            <div class="col p-3">
+                <posts-component api_token="<?= auth()->user()->api_token ?>"></posts-component>
             </div>
 
 

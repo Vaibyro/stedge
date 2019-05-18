@@ -8,7 +8,8 @@
                     <a class="mr-2" href="#" v-if="user">@{{ user.name }}</a>
                 </span>
                 <a class="badge badge-gd-primary mr-1" href="#" v-for="tag in tags">{{ tag.hash_name }}</a>
-                <span class="badge badge-danger">{{ emergency }}</span>
+                <span class="badge badge-danger">W: {{ weight }}</span>
+                <span class="badge badge-danger">E: {{ emergency }}</span>
             </div>
             <div class="col-6 text-right">
                 {{ date }}
@@ -31,7 +32,7 @@
     import moment from 'moment'
 
     export default {
-        props: ['id'],
+        props: ['id', 'coeff', 'api_token'],
 
         data() {
             return {
@@ -43,6 +44,7 @@
                 answers: null,
                 emergency: null,
                 currentAnswer: null,
+                weight: this.coeff,
             }
         },
 
@@ -53,10 +55,11 @@
                     post_id: this.id
                 }, {
                     headers: {
-                        'Authorization':'Bearer ' + '456',
+                        'Authorization':'Bearer ' + this.api_token,
                     }
                 }).then((response) => {
                     this.load();
+                    this.reloadCoeff();
                 })
                     .catch((e) => {
                         console.error(e);
@@ -66,7 +69,7 @@
                 axios
                     .get('api/posts/' + this.id, {
                         headers: {
-                            'Authorization':'Bearer ' + '456',
+                            'Authorization':'Bearer ' + this.api_token,
                         }
                     })
                     .then(response => {
@@ -78,12 +81,27 @@
                         this.emergency = data.emergency;
                         this.tags = data.tags.data;
                         this.answers = data.answers.data;
+                    }).catch((e) => {
+                    console.error(e);
+                })
+            },
+            reloadCoeff: function () {
+                axios
+                    .get('api/feed/' + this.id, {
+                        headers: {
+                            'Authorization':'Bearer ' + this.api_token,
+                        }
                     })
+                    .then(response => {
+                        this.weight = response.data.data.coeff;
+                    }).catch((e) => {
+                    console.error(e);
+                })
             }
         },
 
         mounted() {
-            console.log('Post Component mounted.');
+            console.log("TOKEN : " + this.api_token);
             this.load();
         }
     }

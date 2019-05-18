@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->boolean('is_official')->unique()->default(false);
+            $table->boolean('is_official')->default(false);
             $table->timestamps();
         });
     }

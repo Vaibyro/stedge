@@ -23,7 +23,8 @@ Route::middleware(['auth:api'])->group(function () {
         'tags' => 'TagController',
         'states' => 'StateController',
         'posts' => 'PostController',
-        'answers' => 'AnswerController'
+        'answers' => 'AnswerController',
+        'feed' => 'FeedController'
     ]);
 });
 

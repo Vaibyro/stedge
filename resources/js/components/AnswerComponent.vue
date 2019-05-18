@@ -9,6 +9,10 @@
         </div>
 
         {{ content }}
+
+        <div style="color: #d0211c">
+            <font-awesome-icon icon="heart" /> 1
+        </div>
     </div>
 </template>
 
