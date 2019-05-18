@@ -20,7 +20,9 @@ class AnswerResource extends JsonResource
             'updated_at' => $this->updated_at,
             'user' => [
                 'id' => $this->user->id,
-                'name' => $this->user->name
+                'name' => $this->user->name,
+                'firstname' => $this->user->firstname,
+                'lastname' => $this->user->lastname
             ]
         ];
     }

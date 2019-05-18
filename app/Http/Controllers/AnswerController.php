@@ -3,22 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use App\Http\Resources\PostResource;
-use App\Http\Resources\PostsResource;
-use App\Post;
+use App\Http\Resources\AnswerResource;
+use App\Http\Resources\TagResource;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
-{
+class AnswerController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return new PostsResource(Post::all());
+    public function index() {
+        return "test" . Auth::id();
     }
 
     /**
@@ -26,8 +24,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -37,37 +34,33 @@ class PostController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $post = new Post();
+    public function store(Request $request) {
+        $answer = new Answer();
 
-        $post->content = $request->message;
-        $post->user_id = Auth::id();
-        $post->state_id = 1;
-        $post->emergency = 0;
-        $post->save();
+        $answer->content = $request->message;
+        $answer->post_id = $request->post_id;
+        $answer->user_id = Auth::id();
+        $answer->save();
         return "ok";
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return new PostResource(Post::find($id));
+    public function show(Answer $answer) {
+        return new AnswerResource($answer);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit(Answer $answer) {
         //
     }
 
@@ -75,22 +68,20 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, Answer $answer) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy(Answer $answer) {
         //
     }
 }

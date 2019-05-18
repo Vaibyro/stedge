@@ -47,7 +47,7 @@ body {
 
 .light {
   color: #292929;
-  background-color: #f8f9f9; }
+  background-color: #e6ecf2; }
 
 a {
   text-decoration: none; }
@@ -2455,12 +2455,13 @@ template {
     margin-left: 91.66667%; } }
 
 .pane {
-  border-radius: 25px;
-  padding: 16px 16px 16px 16px; }
+  border-radius: 2px;
+  padding: 16px 20px 16px 20px; }
 
 .pane-answer {
   border: 2px solid #ebebeb;
-  border-radius: 10px;
+  background-color: #fbfbfb;
+  border-radius: 3px;
   padding: 8px;
 }
 
@@ -2473,8 +2474,9 @@ template {
   border: 2px solid #636363; }
 
 .light .pane {
-  border: 2px solid #ebebeb;
-  background-color: #fff;
+  border: 1px solid #cbd0d5;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.15);
+  background-color: #ffffff;
 }
 
 .btn {

@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('tags', 'TagController');
-Route::resource('states', 'StateController');
-Route::resource('posts', 'PostController');
+Route::middleware(['auth:api'])->group(function () {
+
+    Route::apiResources([
+        'tags' => 'TagController',
+        'states' => 'StateController',
+        'posts' => 'PostController',
+        'answers' => 'AnswerController'
+    ]);
+});
+

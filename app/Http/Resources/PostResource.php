@@ -24,7 +24,9 @@ class PostResource extends JsonResource
             'answers' => new PostAnswersRelationshipResource($this->answers),
             'user' => [
                 'id' => $this->user->id,
-                'name' => $this->user->name
+                'name' => $this->user->name,
+                'firstname' => $this->user->firstname,
+                'lastname' => $this->user->lastname
             ]
         ];
     }

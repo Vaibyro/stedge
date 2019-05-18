@@ -20,6 +20,7 @@
     <link href="{{ asset('css/axiom-ui.css') }}" rel="stylesheet">
 </head>
 <body>
+<div id="app">
     <div id="root light">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -76,5 +77,6 @@
             @yield('content')
         </main>
     </div>
+</div>
 </body>
 </html>
