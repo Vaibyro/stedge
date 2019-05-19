@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('state_id');
             $table->foreign('state_id')->references('id')->on('states');
             $table->integer('emergency')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

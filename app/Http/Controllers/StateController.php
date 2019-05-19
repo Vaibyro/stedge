@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StateResource;
+use App\Http\Resources\StatesResource;
 use App\State;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,11 @@ class StateController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return StatesResource
      */
     public function index()
     {
-        //
+        return new StatesResource(State::all());
     }
 
     /**
@@ -43,7 +44,7 @@ class StateController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return StateResource
      */
     public function show($id)
     {

@@ -1,15 +1,19 @@
 <template id="tags-component">
-    <div class="p-1  mb-2" style="background-color: #e2ebf0; border-radius: 8px;">
-        <h5>Sujets</h5>
-        <ul>
+    <div class="pane mb-2 w-100">
+        <h5>
+            <font-awesome-icon icon="hashtag"/>
+            Sujets
+        </h5>
+        <ul class="menu">
             <li v-for="tag in tagsList" v-bind:key="tag.id">
-                <label>
-                    <input type="checkbox"
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input class="custom-control-input" type="checkbox"
                            :id="tag.name"
                            :value="tag.id"
                            v-model="tagsFilter"
-                           @change="changeTagFilter()"/> {{ tag.hash_name }}
-                </label>
+                           @change="changeTagFilter()"/>
+                    <label class="custom-control-label" :for="tag.name">{{ tag.hash_name }}</label>
+                </div>
             </li>
         </ul>
     </div>
@@ -17,6 +21,9 @@
 
 </template>
 
+<style>
+
+</style>
 
 <script>
     export default {
@@ -40,7 +47,7 @@
                 axios
                     .get('api/tags/', {
                         headers: {
-                            'Authorization':'Bearer ' + this.api_token,
+                            'Authorization': 'Bearer ' + this.api_token,
                         },
                         params: {
                             'only_official': true
@@ -57,10 +64,6 @@
             changeTagFilter: function () {
                 this.$root.$emit('changeTagFilter', this.tagsFilter)
             },
-
-            test: function () {
-                console.log(this.tagsFilter);
-            }
         },
 
         mounted() {

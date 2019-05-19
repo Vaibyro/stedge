@@ -113,9 +113,25 @@ class PostController extends Controller {
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws \Exception
      */
     public function destroy($id) {
-        //
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new \Exception('Public user cannot post.');
+        }
+
+        $post = Post::find($id);
+        if($post->user_id == Auth::user()->id)
+        {
+            Post::destroy($id);
+            return [
+                'id' => $id,
+                'state' => 'Post deleted'
+            ];
+        }
+
+        throw new \Exception('Cannot delete others posts.');
+
     }
 }

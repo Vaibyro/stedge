@@ -52,6 +52,7 @@ body {
 a {
   text-decoration: none; }
 
+/*
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   margin-bottom: 0.5rem;
@@ -128,6 +129,8 @@ h1, h2, h3, h4, h5, h6 {
 @media only screen and (min-width: 1200px) {
   h6, .h6 {
     font-size: 1.17rem; } }
+*/
+
 
 .bold {
   font-weight: 600; }
@@ -2454,30 +2457,13 @@ template {
   .offset-xl-11 {
     margin-left: 91.66667%; } }
 
-.pane {
-  border-radius: 2px;
-  padding: 16px 20px 16px 20px; }
 
-.pane-answer {
-  border: 2px solid #ebebeb;
-  background-color: #fbfbfb;
-  border-radius: 3px;
-  padding: 8px;
-}
 
-.pane-best-answer {
-  border-color: #0bb468;
-  color: #0c5e20;
-}
 
 .dark .pane {
   border: 2px solid #636363; }
 
-.light .pane {
-  border: 1px solid #cbd0d5;
-  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.15);
-  background-color: #ffffff;
-}
+
 
 /* Les animations d'entrée (« enter ») et de sortie (« leave »)  */
 /* peuvent utiliser différentes fonctions de durée et de temps.  */
@@ -2636,6 +2622,7 @@ template {
   border: solid #ff4957 2px;
   background: transparent; }
 
+/*
 .form-control {
   padding: 9px 15px 9px 15px;
   border-radius: 25px;
@@ -2649,6 +2636,8 @@ template {
     border: 2px solid #54b4ff;
     box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.1); }
 
+
+ */
 .alert {
   position: relative;
   padding: 9px 15px 9px 15px;

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class PostResource extends JsonResource
 {
@@ -23,6 +24,7 @@ class PostResource extends JsonResource
             'tags' => new PostTagsRelationshipResource($this->tags),
             'answers' => new PostAnswersRelationshipResource($this->answers),
             'is_public' => $this->circle_id == env('PUBLIC_CIRCLE_ID', 1),
+            'is_it_me' => $this->user_id == Auth::user()->id,
             'circle' => new CircleResource($this->circle),
             'user' => [
                 'id' => $this->user->id,

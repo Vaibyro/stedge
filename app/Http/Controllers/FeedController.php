@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use App\Http\Resources\AnswerResource;
-use App\Http\Resources\FeedResource;
-use App\Http\Resources\TagResource;
-use App\Tag;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +31,7 @@ class FeedController extends Controller {
                     ->orWhere('posts.circle_id', '=', DB::raw(env('PUBLIC_CIRCLE_ID', 1)));
             })
 
-            // Restrict to circles
-
-            ->orderBy('emergency')
+            ->whereNull('posts.deleted_at')
             ->groupBy('posts.id', 'posts.created_at', 'posts.emergency');
 
         // Filters
@@ -61,7 +55,28 @@ class FeedController extends Controller {
             // calculate the coeff
             $post->coeff = $this->calculateCoeff($post);
         }
-        $posts = $posts->sortByDesc('coeff');
+
+        // Sorting
+        if(isset($request->sort)) {
+            switch ($request->sort) {
+                case "date_desc":
+                    $posts = $posts->sortByDesc('created_at');
+                    break;
+                case "date_asc":
+                    $posts = $posts->sortBy('created_at');
+                    break;
+                case "coeff_asc":
+                    $posts = $posts->sortBy('coeff');
+                    break;
+                case "coeff_desc":
+                    $posts = $posts->sortByDesc('coeff');
+                    break;
+            }
+
+        } else {
+            // default sort
+            $posts = $posts->sortByDesc('coeff');
+        }
 
 
         return ['data' => [

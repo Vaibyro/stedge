@@ -1,11 +1,18 @@
 <template id="posts-component">
     <div>
         <div class="pane mb-2">
-            <h6>Nouveau sujet</h6>
+            <h6><font-awesome-icon icon="plus" /> Nouveau sujet</h6>
+            <hr>
             <div>
                 <div class="form-group">
-                    <textarea class="form-control" v-model="currentPost"></textarea>
+                    <textarea class="form-control" v-model="currentPost" placeholder="Posez une question..."></textarea>
                 </div>
+
+                <vue-tags-input
+                        v-model="tag"
+                        :tags="tags"
+                        @tags-changed="newTags => tags = newTags">
+                </vue-tags-input>
             </div>
             <div>
                 <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
@@ -25,19 +32,17 @@
             </transition-group>
         </div>
 
-        <div>
+        <div class="text-center">
             Fin du fil d'actualité
         </div>
 
     </div>
-
-
-
 </template>
 
 
 <script>
     import PostComponent from "./PostComponent";
+    import VueTagsInput from '@johmun/vue-tags-input';
 
     export default {
         props: {
@@ -54,7 +59,8 @@
                 newPostsAmount: 5,
                 currentCount: this.currentPosts,
                 circleFilter: [],
-                tagFilter: []
+                tagFilter: [],
+                sortMethod: 'coeff_desc'
             }
         },
 
@@ -120,7 +126,8 @@
                         },
                         params: {
                             'circles': this.circleFilter.join(','),
-                            'tags': this.tagFilter.join(',')
+                            'tags': this.tagFilter.join(','),
+                            'sort': this.sortMethod
                         }
                     })
                     .then(response => {
@@ -152,6 +159,11 @@
 
             this.$root.$on('changeCircleFilter', (circlesList) => {
                 this.circleFilter = circlesList;
+                this.initialLoad();
+            });
+
+            this.$root.$on('changeSortMethod', (sortMethod) => {
+                this.sortMethod = sortMethod;
                 this.initialLoad();
             });
         }

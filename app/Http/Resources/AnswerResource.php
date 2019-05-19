@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerResource extends JsonResource
 {
@@ -20,6 +21,7 @@ class AnswerResource extends JsonResource
             'updated_at' => $this->updated_at,
             'user' => [
                 'id' => $this->user->id,
+                'is_it_me' => $this->user->id == Auth::user()->id,
                 'name' => $this->user->name,
                 'firstname' => $this->user->firstname,
                 'lastname' => $this->user->lastname,

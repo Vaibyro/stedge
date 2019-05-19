@@ -1,18 +1,20 @@
 <template id="circles-component">
-    <div class="p-1  mb-2" style="background-color: #e2ebf0; border-radius: 8px;">
-        <h5>Cercles</h5>
-        <ul>
+    <div class="pane mb-2">
+        <h5> <font-awesome-icon icon="users" /> Cercles</h5>
+        <ul  class="menu">
             <li v-for="circle in circlesList" v-bind:key="circle.id">
-                <label>
-                    <input type="checkbox"
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input class="custom-control-input" type="checkbox"
                            :id="circle.name"
                            :value="circle.id"
                            v-model="circlesFilter"
-                           @change="changeCircleFilter()"/> {{ circle.name }}
-                </label>
+                           @change="changeCircleFilter()"/>
+                    <label class="custom-control-label" :for="circle.name">{{ circle.name }}</label>
+                </div>
+
             </li>
         </ul>
-        <a class="btn btn-gd-primary" href="circles">Gérer mes cercles</a>
+        <a class="" href="circles">Gérer mes cercles</a>
     </div>
 
 

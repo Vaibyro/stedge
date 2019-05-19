@@ -18,15 +18,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::get('/tags/trends/', 'TrendsController@index');
+    Route::get('/feed', 'FeedController@index');
 
     Route::apiResources([
         'tags' => 'TagController',
         'states' => 'StateController',
         'posts' => 'PostController',
         'answers' => 'AnswerController',
-        'feed' => 'FeedController',
         'users' => 'UserController',
         'circles' => 'CircleController'
     ]);
+
+
 });
 

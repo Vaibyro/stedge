@@ -25,7 +25,6 @@ class UserController extends Controller {
     }
 
     public function update_avatar(Request $request) {
-
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -37,6 +36,10 @@ class UserController extends Controller {
         $request->avatar->storeAs('avatars', $avatarName);
 
         // create a resized copy
+        Image::make(storage_path('app/public/avatars/' . $avatarName))
+            ->fit(600)
+            ->save(storage_path('app/public/avatars/' . $avatarName));
+
         Image::make(storage_path('app/public/avatars/' . $avatarName))
             ->resize(100, 100)
             ->save(storage_path('app/public/avatars_small/' . $avatarName));
