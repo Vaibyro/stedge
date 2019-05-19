@@ -4,7 +4,7 @@
             <font-awesome-icon icon="sort"/>
             Tri
         </h5>
-
+        <hr>
         <div class="form-group">
             <select id="sort-dropbox" class="custom-select" v-model="sortMethod"
                     @change="changeSortMethod()">

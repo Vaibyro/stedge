@@ -4,6 +4,7 @@
             <font-awesome-icon icon="hashtag"/>
             Sujets
         </h5>
+        <hr>
         <ul class="menu">
             <li v-for="tag in tagsList" v-bind:key="tag.id">
                 <div class="custom-control custom-checkbox mr-sm-2">
@@ -28,7 +29,8 @@
 <script>
     export default {
         props: {
-            api_token: String
+            api_token: String,
+            tags_route: String
         },
 
         data() {
@@ -45,7 +47,7 @@
              */
             load: function () {
                 axios
-                    .get('api/tags/', {
+                    .get(this.tags_route, {
                         headers: {
                             'Authorization': 'Bearer ' + this.api_token,
                         },

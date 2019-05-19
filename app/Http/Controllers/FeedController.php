@@ -17,7 +17,7 @@ class FeedController extends Controller {
      */
     public function index(Request $request) {
         $posts = DB::table('posts')
-            ->select('posts.id', 'posts.created_at', 'posts.emergency', DB::raw('count(answers.post_id) as answers_count'))
+            ->select('posts.id', 'posts.created_at', 'posts.emergency', 'posts.state_id', DB::raw('count(answers.post_id) as answers_count'))
             ->join('circle_user', function ($join) {
                 $join->on('posts.circle_id', '=', 'circle_user.circle_id')->orOn('posts.circle_id', '=', DB::raw(env('PUBLIC_CIRCLE_ID', 1)));
             })
@@ -32,7 +32,7 @@ class FeedController extends Controller {
             })
 
             ->whereNull('posts.deleted_at')
-            ->groupBy('posts.id', 'posts.created_at', 'posts.emergency');
+            ->groupBy('posts.id', 'posts.created_at', 'posts.emergency', 'posts.state_id');
 
         // Filters
         if(isset($request->circles)) {
@@ -93,13 +93,13 @@ class FeedController extends Controller {
      */
     public function show($id) {
         $post = DB::table('posts')
-            ->select('posts.id', 'posts.created_at', 'posts.emergency', DB::raw('count(answers.post_id) as answers_count'))
+            ->select('posts.id', 'posts.created_at', 'posts.emergency', 'posts.state_id', DB::raw('count(answers.post_id) as answers_count'))
             ->join('circle_user', function ($join) {
                 $join->on('posts.circle_id', '=', 'circle_user.circle_id')->orOn('posts.circle_id', '=', DB::raw(1));
             })
             ->leftJoin('answers', 'answers.post_id', '=', 'posts.id')
             ->orderBy('emergency')
-            ->groupBy('posts.id', 'posts.created_at', 'posts.emergency')
+            ->groupBy('posts.id', 'posts.created_at', 'posts.emergency', 'posts.state_id')
             ->where('posts.id', '=', $id)
             ->get();
         $post = $post->first();
@@ -114,6 +114,10 @@ class FeedController extends Controller {
     }
 
     private function calculateCoeff($post) {
+        if($post->state_id == env('SOLVED_STATE_ID', 2)) {
+            return 0;
+        }
+
         $date = new DateTime($post->created_at);
         $now = new DateTime();
         $diff = $date->diff($now);

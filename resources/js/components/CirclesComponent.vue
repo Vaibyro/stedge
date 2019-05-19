@@ -1,6 +1,7 @@
 <template id="circles-component">
     <div class="pane mb-2">
         <h5> <font-awesome-icon icon="users" /> Cercles</h5>
+        <hr>
         <ul  class="menu">
             <li v-for="circle in circlesList" v-bind:key="circle.id">
                 <div class="custom-control custom-checkbox mr-sm-2">
@@ -25,6 +26,7 @@
     export default {
         props: {
             api_token: String,
+            users_route: String,
             user_id: String
         },
 
@@ -42,7 +44,7 @@
              */
             load: function () {
                 axios
-                    .get('api/users/' + this.user_id, {
+                    .get(this.users_route + '/' + this.user_id, {
                         headers: {
                             'Authorization':'Bearer ' + this.api_token,
                         },

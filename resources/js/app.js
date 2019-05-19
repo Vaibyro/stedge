@@ -20,12 +20,26 @@ import {
     faUsers,
     faCheck,
     faPlus,
-    faPoll
+    faPoll,
+    faUser,
+    faSearch
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
-library.add(faHeart, faGlobe, faUserFriends, faCog, faSort, faHashtag, faUsers, faCheck, faPlus, faPoll);
+library.add(faHeart,
+    faGlobe,
+    faUserFriends,
+    faCog,
+    faSort,
+    faHashtag,
+    faUsers,
+    faCheck,
+    faPlus,
+    faPoll,
+    faUser,
+    faSearch
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

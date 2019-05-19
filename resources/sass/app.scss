@@ -10,5 +10,19 @@
 
 .navbar-laravel {
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid #cbd0d5;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.15);
+}
+
+body {
+  padding-top: 46px;
+  background-color: #f8f8f8;
+}
+
+.pane {
+  border-radius: 2px;
+  padding: 16px 20px 16px 20px;
+  border: 1px solid #cbd0d5;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.15);
+  background-color: #ffffff;
 }

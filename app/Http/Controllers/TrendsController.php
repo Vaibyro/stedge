@@ -20,9 +20,9 @@ class TrendsController extends Controller {
      */
     public function index(Request $request) {
         $length = env('TRENDS_DEFAULT_LENGTH', 10);
-        return ['data' => [
+        return ['data' =>
             $this->getPostCountPerTag($length)
-        ]];
+        ];
     }
 
     /**

@@ -13,6 +13,7 @@
                         :tags="tags"
                         @tags-changed="newTags => tags = newTags">
                 </vue-tags-input>
+
             </div>
             <div>
                 <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
@@ -20,6 +21,7 @@
 
         </div>
 
+        <!-- posts -->
         <div ref="posts">
             <transition-group name="slide-fade">
                 <post-component
@@ -27,6 +29,9 @@
                         v-bind:key="post.id"
                         v-bind:id="post.id"
                         v-bind:coeff="post.coeff"
+                        :posts_route="posts_route"
+                        :answers_route="answers_route"
+                        :full_display="false"
                         v-bind:api_token="api_token">
                  </post-component>
             </transition-group>
@@ -47,6 +52,8 @@
     export default {
         props: {
             api_token: String,
+            posts_route: String,
+            answers_route: String,
             tagsFilter: Array
         },
 

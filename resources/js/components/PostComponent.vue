@@ -33,31 +33,33 @@
 
         <p>{{ content }}</p>
 
+        <!-- answers -->
         <div>
             <answer-component v-for="answer in answers" v-bind:answer="answer"></answer-component>
-            <a href="">Afficher la suite</a>
+
+            <div v-if="answers.length > 0">
+                <a href="">Afficher la suite</a>
+            </div>
+
         </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-10">
-                <input type="text" class="form-control" v-model="currentAnswer"/>
+        <hr>
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Votre réponse rapide..." aria-label="Username" aria-describedby="basic-addon1" v-model="currentAnswer">
+            <div class="input-group-append">
+                <button class="btn btn-gd-primary" type="button" @click="add()">:)</button>
             </div>
-            <div class="form-group col-md-2">
-                <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
+
+            <div class="input-group-append">
+                <button class="btn btn-gd-primary" type="button" @click="add()">Répondre</button>
             </div>
         </div>
+
     </div>
 </template>
 
 <style>
-    .pane {
-        border-radius: 2px;
-        padding: 16px 20px 16px 20px;
-        border: 1px solid #cbd0d5;
-        box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.15);
-        background-color: #ffffff;
-    }
-
     .closed {
         border: 1px solid #d50700;
     }
@@ -72,7 +74,14 @@
     moment.locale('fr');
 
     export default {
-        props: ['id', 'coeff', 'api_token'],
+        props: {
+            id: Number,
+            posts_route: String,
+            answers_route: String,
+            coeff: Number,
+            api_token: String,
+            full_display: Boolean
+        },
 
         data() {
             return {
@@ -94,7 +103,7 @@
 
         methods: {
             add: function() {
-                axios.post('api/answers', {
+                axios.post(this.answers_route, {
                     message: this.currentAnswer,
                     post_id: this.id
                 }, {
@@ -111,7 +120,7 @@
             },
             load: function () {
                 axios
-                    .get('api/posts/' + this.id, {
+                    .get(this.posts_route + '/' + this.id, {
                         headers: {
                             'Authorization':'Bearer ' + this.api_token,
                         }
@@ -130,7 +139,7 @@
                         this.isme = data.is_it_me;
                         this.state = data.state;
                     }).catch((e) => {
-                    console.error(e);
+                    console.error(e.response);
                 })
             },
             reloadCoeff: function () {

@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller {
+    public function view($id) {
+        return view('post', ['id' => $id]);
+    }
+
     /**
      * Display a listing of the resource.
      *

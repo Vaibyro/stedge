@@ -28,26 +28,8 @@
   Typography
 
  */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  font-weight: 400; }
-  @media only screen and (min-width: 0) {
-    body {
-      font-size: 0.99rem; } }
-  @media only screen and (min-width: 992px) {
-    body {
-      font-size: 0.945rem; } }
-  @media only screen and (min-width: 1200px) {
-    body {
-      font-size: 0.9rem; } }
 
-.dark {
-  color: #ffffff;
-  background-color: #1a1a1a; }
 
-.light {
-  color: #292929;
-  background-color: #e6ecf2; }
 
 a {
   text-decoration: none; }
@@ -138,151 +120,8 @@ h1, h2, h3, h4, h5, h6 {
 .bold-heavy {
   font-weight: 800; }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box; }
 
-html {
-  font-family: sans-serif;
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-  -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
-/*
-@at-root {
-  @-ms-viewport {
-    width: device-width;
-  }
-}
-*/
-body {
-  margin: 0;
-  line-height: 1.5;
-  color: #212529;
-  text-align: left;
-  background-color: #fff; }
-
-[tabindex="-1"]:focus {
-  outline: 0 !important; }
-
-hr {
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: 1rem; }
-
-p {
-  margin-top: 0;
-  margin-bottom: 1rem; }
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: underline;
-  text-decoration: underline dotted;
-  cursor: help;
-  border-bottom: 0;
-  text-decoration-skip-ink: none; }
-
-address {
-  margin-bottom: 1rem;
-  font-style: normal;
-  line-height: inherit; }
-
-ol,
-ul,
-dl {
-  margin-top: 0;
-  margin-bottom: 1rem; }
-
-ol ol,
-ul ul,
-ol ul,
-ul ol {
-  margin-bottom: 0; }
-
-dd {
-  margin-bottom: .5rem;
-  margin-left: 0; }
-
-blockquote {
-  margin: 0 0 1rem; }
-
-b,
-strong {
-  font-weight: bolder; }
-
-small {
-  font-size: 80%; }
-
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline; }
-
-sub {
-  bottom: -.25em; }
-
-sup {
-  top: -.5em; }
-
-a {
-  background-color: transparent;
-  /*
-  @include hover {
-    color: $link-hover-color;
-    text-decoration: $link-hover-decoration;
-  }
-  */ }
-
-a:not([href]):not([tabindex]) {
-  color: inherit;
-  text-decoration: none;
-  /* TODO
-  @include hover-focus {
-    color: inherit;
-    text-decoration: none;
-  }
-  */ }
-  a:not([href]):not([tabindex]):focus {
-    outline: 0; }
-
-pre,
-code,
-kbd,
-samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 1em; }
-
-pre {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  overflow: auto;
-  -ms-overflow-style: scrollbar; }
-
-figure {
-  margin: 0 0 1rem; }
-
-img {
-  vertical-align: middle;
-  border-style: none; }
-
-svg {
-  overflow: hidden;
-  vertical-align: middle; }
-
-table {
-  border-collapse: collapse; }
-
-caption {
-  text-align: left;
-  caption-side: bottom; }
 
 th {
   text-align: inherit; }
@@ -291,7 +130,8 @@ label {
   display: inline-block; }
 
 button {
-  border-radius: 0; }
+  border-radius: 0;
+}
 
 button:focus {
   outline: 1px dotted;
@@ -2481,9 +2321,7 @@ template {
 
 .btn {
   border-radius: 25px;
-  padding: 10px 16px 10px 16px;
   border: none;
-  margin: 4px;
   display: inline-block;
   color: #ffffff;
   cursor: pointer;

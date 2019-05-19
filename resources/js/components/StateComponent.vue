@@ -1,6 +1,7 @@
 <template id="state-component">
     <div class="pane mb-2">
         <h5><font-awesome-icon icon="check" /> Etat</h5>
+        <hr>
         <ul class="menu">
             <li v-for="state in states" v-bind:key="state.id">
                 <label class="pane-c">

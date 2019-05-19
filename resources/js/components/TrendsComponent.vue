@@ -4,17 +4,13 @@
             <font-awesome-icon icon="poll"/>
             A la une
         </h5>
-
-        <div class="form-group">
-            <select id="sort-dropbox" class="custom-select" v-model="sortMethod"
-                    @change="changeSortMethod()">
-                <option value="coeff_desc">Pertinence</option>
-                <option value="date_asc">Du plus vieux au plus récent</option>
-                <option value="date_desc">Du plus récent au plus vieux</option>
-                <option value="coeff_asc">Les moins importants d'abord</option>
-            </select>
-            <label hidden="hidden" for="sort-dropbox"></label>
-        </div>
+        <hr>
+        <ul  class="menu">
+            <li v-for="trend in trendsList" v-bind:key="trend.id">
+                {{ trend.name }} {{ trend.posts_count }}
+            </li>
+        </ul>
+        <a class="" href="circles">Voir plus</a>
 
 
     </div>
@@ -32,20 +28,27 @@
 
         data() {
             return {
-                sortMethod: 'coeff_desc'
+                trendsList: []
             }
         },
 
-
         methods: {
             /**
-             * Load the tags list
+             * Load the trends list
              */
             load: function () {
-            },
+                axios
+                    .get('api/tags/trends', {
+                        headers: {
+                            'Authorization':'Bearer ' + this.api_token,
+                        },
+                    })
+                    .then(response => {
+                        this.trendsList = response.data.data;
+                    }).catch((e) => {
+                    console.error(e);
 
-            changeSortMethod: function () {
-                this.$root.$emit('changeSortMethod', this.sortMethod);
+                })
             },
         },
 
