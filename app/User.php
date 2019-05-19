@@ -7,8 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use Notifiable;
 
     /**
@@ -46,8 +45,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Post');
     }
 
-    public function setNewApiToken()
-    {
+    public function setNewApiToken() {
         $this->api_token = Str::uuid();
         $this->save();
     }

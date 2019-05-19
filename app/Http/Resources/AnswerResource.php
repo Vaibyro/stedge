@@ -22,7 +22,9 @@ class AnswerResource extends JsonResource
                 'id' => $this->user->id,
                 'name' => $this->user->name,
                 'firstname' => $this->user->firstname,
-                'lastname' => $this->user->lastname
+                'lastname' => $this->user->lastname,
+                'avatar_url' => asset('storage/avatars/' . $this->user->avatar),
+                'avatar_small_url' => asset('storage/avatars_small/' . $this->user->avatar)
             ]
         ];
     }

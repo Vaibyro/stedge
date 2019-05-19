@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Circle;
+use App\Http\Resources\CircleResource;
 use App\Http\Resources\TagResource;
 use App\Http\Resources\TagsResource;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TagController extends Controller
+class CircleController extends Controller
 {
+
+    public function configure() {
+        return view('circles');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,13 +25,7 @@ class TagController extends Controller
      */
     public function index(Request $request)
     {
-        if (isset($request->only_official)) {
-            if ($request->only_official) {
-                return new TagsResource(Tag::where('is_official', true)->get());
-            }
-        }
-
-        return new TagsResource(Tag::all());
+        return new CircleResource(Tag::all());
     }
 
     /**
@@ -50,12 +52,12 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return CircleResource
      */
     public function show($id)
     {
-        return new TagResource(Tag::find($id));
+        return new CircleResource(Circle::find($id));
     }
 
     /**

@@ -32,23 +32,31 @@ class AnswerController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws \Exception
      */
     public function store(Request $request) {
+        // Public user check
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new \Exception('Public user cannot post.');
+        }
+
         $answer = new Answer();
 
         $answer->content = $request->message;
         $answer->post_id = $request->post_id;
         $answer->user_id = Auth::id();
         $answer->save();
-        return "ok";
+
+        // return the id
+        return ['id' => $answer->id];
     }
 
     /**
      * Display the specified resource.
      *
      * @param \App\Answer $answer
-     * @return \Illuminate\Http\Response
+     * @return AnswerResource
      */
     public function show(Answer $answer) {
         return new AnswerResource($answer);

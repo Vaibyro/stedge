@@ -3,6 +3,7 @@
 
         <div class="row">
             <div class="col-6">
+                <span v-if="user"><img class="border rounded-circle" :src="user.avatar_small_url" width="30" /></span>
                 <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
                 <a href="#" v-if="user">@{{ user.name }}</a></div>
             <div class="col-6 text-right">{{ date }}</div>

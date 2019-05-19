@@ -22,17 +22,33 @@ class FeedController extends Controller {
     public function index(Request $request) {
         $posts = DB::table('posts')
             ->select('posts.id', 'posts.created_at', 'posts.emergency', DB::raw('count(answers.post_id) as answers_count'))
-            ->join('circle_users', function ($join) {
-                $join->on('posts.circle_id', '=', 'circle_users.circle_id')->orOn('posts.circle_id', '=', DB::raw(env('PUBLIC_CIRCLE_ID', 1)));
+            ->join('circle_user', function ($join) {
+                $join->on('posts.circle_id', '=', 'circle_user.circle_id')->orOn('posts.circle_id', '=', DB::raw(env('PUBLIC_CIRCLE_ID', 1)));
             })
             ->leftJoin('answers', 'answers.post_id', '=', 'posts.id')
+            ->leftJoin('post_tag', 'post_tag.post_id', '=', 'posts.id')
+
+            ->where(function ($query) {
+                $query->where('circle_user.user_id', '=', Auth::user()->id)
+
+                    // But allow public circle
+                    ->orWhere('posts.circle_id', '=', DB::raw(env('PUBLIC_CIRCLE_ID', 1)));
+            })
+
+            // Restrict to circles
+
             ->orderBy('emergency')
             ->groupBy('posts.id', 'posts.created_at', 'posts.emergency');
 
         // Filters
+        if(isset($request->circles)) {
+            $circles = explode(",", $request->circles);
+            $posts = $posts->whereIn('posts.circle_id', $circles);
+        }
+
         if(isset($request->tags)) {
             $tags = explode(",", $request->tags);
-            $posts = $posts->whereIn('posts.circle_id', $tags);
+            $posts = $posts->whereIn('post_tag.tag_id', $tags);
         }
 
         // Limit the amount
@@ -63,8 +79,8 @@ class FeedController extends Controller {
     public function show($id) {
         $post = DB::table('posts')
             ->select('posts.id', 'posts.created_at', 'posts.emergency', DB::raw('count(answers.post_id) as answers_count'))
-            ->join('circle_users', function ($join) {
-                $join->on('posts.circle_id', '=', 'circle_users.circle_id')->orOn('posts.circle_id', '=', DB::raw(1));
+            ->join('circle_user', function ($join) {
+                $join->on('posts.circle_id', '=', 'circle_user.circle_id')->orOn('posts.circle_id', '=', DB::raw(1));
             })
             ->leftJoin('answers', 'answers.post_id', '=', 'posts.id')
             ->orderBy('emergency')

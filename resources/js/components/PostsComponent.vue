@@ -3,11 +3,12 @@
         <div class="pane mb-2">
             <h6>Nouveau sujet</h6>
             <div>
-                <textarea v-model="currentPost"></textarea>
-
+                <div class="form-group">
+                    <textarea class="form-control" v-model="currentPost"></textarea>
+                </div>
             </div>
             <div>
-                <button @click="add()">Envoyer</button>
+                <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
             </div>
 
         </div>
@@ -24,6 +25,9 @@
             </transition-group>
         </div>
 
+        <div>
+            Fin du fil d'actualité
+        </div>
 
     </div>
 
@@ -36,7 +40,10 @@
     import PostComponent from "./PostComponent";
 
     export default {
-        props: ['api_token'],
+        props: {
+            api_token: String,
+            tagsFilter: Array
+        },
 
         data() {
             return {
@@ -46,6 +53,8 @@
                 currentPosts: [],
                 newPostsAmount: 5,
                 currentCount: this.currentPosts,
+                circleFilter: [],
+                tagFilter: []
             }
         },
 
@@ -108,6 +117,10 @@
                     .get('api/feed/', {
                         headers: {
                             'Authorization':'Bearer ' + this.api_token,
+                        },
+                        params: {
+                            'circles': this.circleFilter.join(','),
+                            'tags': this.tagFilter.join(',')
                         }
                     })
                     .then(response => {
@@ -131,6 +144,16 @@
         mounted() {
             this.scroll();
             this.initialLoad();
+
+            this.$root.$on('changeTagFilter', (tagsList) => {
+                this.tagFilter = tagsList;
+                this.initialLoad();
+            });
+
+            this.$root.$on('changeCircleFilter', (circlesList) => {
+                this.circleFilter = circlesList;
+                this.initialLoad();
+            });
         }
     }
 </script>

@@ -2,31 +2,17 @@
 
 @section('content')
     <div class="container-fluid light">
-
-        <div class="row">
-            <div class="col" style="-ms-flex: 0 0 300px; flex: 0 0 300px;">
-                <div class="p-1  mb-2" style="background-color: #e2ebf0; border-radius: 8px;">
-                    <h5>Sujets</h5>
-                    <ul>
-                        <li><a href="#"># Programmation</a></li>
-                        <li><a href="#"># Divers</a></li>
-                        <li><a href="#"># Voiture</a></li>
-                        <li><a href="#"># Bricolage</a></li>
-                        <li><a href="#"># Police</a></li>
-                    </ul>
-                </div>
-
-                <div class="p-1" style="background-color: #e2ebf0; border-radius: 8px;">
-                    <h5>Mes cercles</h5>
-                </div>
-            </div>
-
-            <div class="col p-3">
-                <posts-component api_token="<?= auth()->user()->api_token ?>"></posts-component>
-            </div>
-
-
-        </div>
-
+        @if(auth()->user() != null)
+            <main-component
+                    api_token="<?= auth()->user()->api_token ?>"
+                    user_id="<?= auth()->user()->id ?>">
+            </main-component>
+        @else
+            <main-component
+                    api_token="<?= \App\User::find(env('PUBLIC_USER_ID', 2))->api_token ?>"
+                    user_id="<?= env('PUBLIC_USER_ID', 2) ?>">
+            </main-component>
+        @endif
+    </div>
 @endsection
 

@@ -22,11 +22,15 @@ class PostResource extends JsonResource
             'state'  => new StateResource($this->state),
             'tags' => new PostTagsRelationshipResource($this->tags),
             'answers' => new PostAnswersRelationshipResource($this->answers),
+            'is_public' => $this->circle_id == env('PUBLIC_CIRCLE_ID', 1),
+            'circle' => new CircleResource($this->circle),
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
                 'firstname' => $this->user->firstname,
-                'lastname' => $this->user->lastname
+                'lastname' => $this->user->lastname,
+                'avatar_url' => asset('storage/avatars/' . $this->user->avatar),
+                'avatar_small_url' => asset('storage/avatars_small/' . $this->user->avatar)
             ]
         ];
     }

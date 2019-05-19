@@ -34,8 +34,14 @@ class PostController extends Controller {
      *
      * @param \Illuminate\Http\Request $request
      * @return array
+     * @throws \Exception
      */
     public function store(Request $request) {
+        // Public user check
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new \Exception('Public user cannot post.');
+        }
+
         $post = new Post();
 
         // Content of the message

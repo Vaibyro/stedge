@@ -13,7 +13,7 @@ class CreateCircleUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('circle_users', function (Blueprint $table) {
+        Schema::create('circle_user', function (Blueprint $table) {
             $table->unsignedBigInteger('circle_id');
             $table->foreign('circle_id')->references('id')->on('circles');
             $table->unsignedBigInteger('user_id');
@@ -28,6 +28,6 @@ class CreateCircleUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('circle_users');
+        Schema::dropIfExists('circle_user');
     }
 }

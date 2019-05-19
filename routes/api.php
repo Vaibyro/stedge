@@ -24,7 +24,9 @@ Route::middleware(['auth:api'])->group(function () {
         'states' => 'StateController',
         'posts' => 'PostController',
         'answers' => 'AnswerController',
-        'feed' => 'FeedController'
+        'feed' => 'FeedController',
+        'users' => 'UserController',
+        'circles' => 'CircleController'
     ]);
 });
 

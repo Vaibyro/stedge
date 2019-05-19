@@ -2,7 +2,8 @@
     <div class="pane mb-2">
 
         <div class="row mb-2">
-            <div class="col-6">
+            <div class="col">
+                <span v-if="user"><img class="border rounded-circle" :src="user.avatar_small_url" width="30" /></span>
                 <span class="h6">
                 <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
                     <a class="mr-2" href="#" v-if="user">@{{ user.name }}</a>
@@ -11,10 +12,15 @@
                 <span class="badge badge-danger">W: {{ weight }}</span>
                 <span class="badge badge-danger">E: {{ emergency }}</span>
             </div>
-            <div class="col-6 text-right">
-                {{ date }}
-                            </div>
+            <div class="col-3 text-right">
+                <span class="mr-2">{{ date }}</span>
+                <span v-if="circle">
+                    <span v-if="this.isPublic" class="badge badge-gd-info"><font-awesome-icon icon="globe"/> Public</span>
+                    <span v-else class="badge badge-gd-success"><font-awesome-icon icon="user-friends" /> {{ circle.name }}</span>
+                </span>
+            </div>
         </div>
+        <hr>
 
         <p>{{ content }}</p>
 
@@ -22,8 +28,14 @@
             <answer-component v-for="answer in answers" v-bind:answer="answer"></answer-component>
         </div>
 
-        <input type="text" v-model="currentAnswer"/>
-        <button @click="add()">Envoyer</button>
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <input type="text" class="form-control" v-model="currentAnswer"/>
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,6 +57,8 @@
                 emergency: null,
                 currentAnswer: null,
                 weight: this.coeff,
+                isPublic: false,
+                circle: null
             }
         },
 
@@ -81,6 +95,8 @@
                         this.emergency = data.emergency;
                         this.tags = data.tags.data;
                         this.answers = data.answers.data;
+                        this.isPublic = data.is_public;
+                        this.circle = data.circle;
                     }).catch((e) => {
                     console.error(e);
                 })
@@ -101,7 +117,6 @@
         },
 
         mounted() {
-            console.log("TOKEN : " + this.api_token);
             this.load();
         }
     }

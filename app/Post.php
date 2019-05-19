@@ -24,4 +24,8 @@ class Post extends Model
     public function state() {
         return $this->belongsTo('App\State');
     }
+
+    public function circle() {
+        return $this->belongsTo('App\Circle');
+    }
 }
