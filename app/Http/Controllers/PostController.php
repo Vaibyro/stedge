@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller {
     public function view($id) {
+        // Check is exists.
+        $post = Post::find($id);
+        if($post == null) {
+            abort(404);
+        }
+
+        // Return the view
         return view('post', ['id' => $id]);
     }
 

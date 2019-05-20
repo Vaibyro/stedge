@@ -1,5 +1,5 @@
 <template id="tags-component">
-    <div class="pane mb-2 w-100">
+    <div class="pane">
         <h5>
             <font-awesome-icon icon="hashtag"/>
             Sujets

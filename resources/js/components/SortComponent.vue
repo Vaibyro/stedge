@@ -1,5 +1,5 @@
 <template id="sort-component">
-    <div class="pane mb-2">
+    <div class="pane">
         <h5>
             <font-awesome-icon icon="sort"/>
             Tri

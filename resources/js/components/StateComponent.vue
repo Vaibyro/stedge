@@ -1,16 +1,36 @@
 <template id="state-component">
-    <div class="pane mb-2">
+    <div class="pane">
         <h5><font-awesome-icon icon="check" /> Etat</h5>
         <hr>
         <ul class="menu">
-            <li v-for="state in states" v-bind:key="state.id">
+            <li>
                 <label class="pane-c">
                     <input type="checkbox"
-                           :id="state.label"
-                           :value="state.id"
+                           id="waiting"
+                           value="waiting"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
-                           checked="checked"/> {{ state.full_label }}
+                           checked="checked"/> En attente
+                </label>
+            </li>
+            <li>
+                <label class="pane-c solved">
+                    <input type="checkbox"
+                           id="solved"
+                           value="solved"
+                           v-model="statesFilter"
+                           @change="changeStateFilter()"
+                           checked="checked"/> Résolu
+                </label>
+            </li>
+            <li>
+                <label class="pane-c closed">
+                    <input type="checkbox"
+                           id="closed"
+                           value="closed"
+                           v-model="statesFilter"
+                           @change="changeStateFilter()"
+                           checked="checked"/> Fermé
                 </label>
             </li>
         </ul>

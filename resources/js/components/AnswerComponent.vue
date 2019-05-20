@@ -2,15 +2,23 @@
     <div class="pane-answer mb-2">
 
         <div class="row">
-            <div class="col-6">
-                <span v-if="user"><img class="border rounded-circle" :src="user.avatar_small_url" width="30" /></span>
+            <div class="col">
+                <span v-if="user"><img class="border rounded-circle" :src="user.avatar_small_url" width="30"/></span>
                 <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
-                <a href="#" v-if="user">@{{ user.name }}</a></div>
-            <div class="col-6 text-right">
-                {{ date }}
+                <!-- todo user page -->
+                <a href="#" v-if="user">@{{ user.name }}</a>
+
+                <span class="ml-2">
+                    <button class="badge badge-tool">Approuver</button>
+                    <button class="badge badge-tool"><font-awesome-icon icon="heart"/> 0</button>
+                </span>
+            </div>
+            <div class="col-3 text-right">
+                <small>{{ date }}</small>
                 <span class="dropdown" v-if="user && user.is_it_me">
-                    <button class="badge badge-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <font-awesome-icon icon="cog" />
+                    <button class="badge badge-tool dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <font-awesome-icon icon="cog"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">Editer</a>
@@ -18,16 +26,11 @@
                     </div>
                 </span>
             </div>
-
-
-
         </div>
-
+        <hr>
         {{ content }}
 
-        <div style="color: #d0211c">
-            <font-awesome-icon icon="heart" /> 1
-        </div>
+
     </div>
 </template>
 
@@ -64,7 +67,7 @@
             console.log('Answer Component mounted.');
             this.content = this.answer.content;
             this.user = this.answer.user;
-            this.date =  moment(this.answer.created_at).fromNow();
+            this.date = moment(this.answer.created_at).fromNow();
         }
     }
 </script>

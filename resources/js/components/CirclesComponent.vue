@@ -1,5 +1,5 @@
 <template id="circles-component">
-    <div class="pane mb-2">
+    <div class="pane">
         <h5> <font-awesome-icon icon="users" /> Cercles</h5>
         <hr>
         <ul  class="menu">

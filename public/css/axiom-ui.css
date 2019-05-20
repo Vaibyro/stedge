@@ -2323,7 +2323,6 @@ template {
   border-radius: 25px;
   border: none;
   display: inline-block;
-  color: #ffffff;
   cursor: pointer;
   outline: 0;
   text-align: center;
@@ -2397,7 +2396,8 @@ template {
     box-shadow: 0 0 3px 0 rgba(149, 33, 226, 0.6), inset 0 0 0 3px rgba(0, 0, 0, 0.4); }
 
 .btn-gd-primary {
-  background: linear-gradient(135deg, #03a3e2 0%, #0656f1 100%); }
+  background: linear-gradient(135deg, #03a3e2 0%, #0656f1 100%);
+  color: #ffffff;}
   .btn-gd-primary:hover, .btn-gd-primary.hover {
     box-shadow: 0 1px 8px 0 rgba(3, 163, 226, 0.6); }
   .btn-gd-primary:focus, .btn-gd-primary.focus {
@@ -2406,7 +2406,7 @@ template {
     box-shadow: 0 0 3px 0 rgba(3, 163, 226, 0.6), inset 0 0 0 3px rgba(0, 0, 0, 0.4); }
 
 .btn-gd-secondary {
-  background: linear-gradient(135deg, #03a3e2 0%, #0656f1 100%); }
+  background: linear-gradient(135deg, #a3a4a4 0%, #7e7e7e 100%); }
   .btn-gd-secondary:hover, .btn-gd-secondary.hover {
     box-shadow: 0 1px 8px 0 rgba(3, 163, 226, 0.6); }
   .btn-gd-secondary:focus, .btn-gd-secondary.focus {

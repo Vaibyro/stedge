@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/tags/trends/', 'TrendsController@index')->name('trends');
     Route::get('/feed', 'FeedController@index')->name('feed');
-
     Route::apiResources([
         'tags' => 'TagController',
         'states' => 'StateController',
@@ -29,7 +28,5 @@ Route::middleware(['auth:api'])->group(function () {
         'users' => 'UserController',
         'circles' => 'CircleController'
     ]);
-
-
 });
 

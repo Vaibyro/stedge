@@ -1,6 +1,6 @@
 <template id="posts-component">
     <div>
-        <div class="pane mb-2">
+        <div class="pane mb-3">
             <h6><font-awesome-icon icon="plus" /> Nouveau sujet</h6>
             <hr>
             <div>
@@ -8,11 +8,13 @@
                     <textarea class="form-control" v-model="currentPost" placeholder="Posez une question..."></textarea>
                 </div>
 
+                <!--
                 <vue-tags-input
                         v-model="tag"
                         :tags="tags"
                         @tags-changed="newTags => tags = newTags">
                 </vue-tags-input>
+                -->
 
             </div>
             <div>
@@ -30,9 +32,12 @@
                         v-bind:id="post.id"
                         v-bind:coeff="post.coeff"
                         :posts_route="posts_route"
+                        :feed_route="feed_route"
+                        :post_view_route="post_view_route"
                         :answers_route="answers_route"
                         :full_display="false"
-                        v-bind:api_token="api_token">
+                        v-bind:api_token="api_token"
+                        class="mb-3">
                  </post-component>
             </transition-group>
         </div>
@@ -53,6 +58,8 @@
         props: {
             api_token: String,
             posts_route: String,
+            feed_route: String,
+            post_view_route: String,
             answers_route: String,
             tagsFilter: Array
         },
@@ -71,8 +78,6 @@
             }
         },
 
-
-
         methods: {
             /**
              * Method to handle the scrolling.
@@ -89,7 +94,7 @@
             },
 
             add: function() {
-                axios.post('api/posts', {
+                axios.post(this.posts_route, {
                     message: this.currentPost
                 }, {
                     headers: {
@@ -127,7 +132,7 @@
              */
             initialLoad: function () {
                 axios
-                    .get('api/feed/', {
+                    .get(this.feed_route, {
                         headers: {
                             'Authorization':'Bearer ' + this.api_token,
                         },

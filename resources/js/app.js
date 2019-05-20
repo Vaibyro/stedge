@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue')
 
+
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faHeart,
@@ -22,7 +24,8 @@ import {
     faPlus,
     faPoll,
     faUser,
-    faSearch
+    faSearch,
+    faLink
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -38,11 +41,11 @@ library.add(faHeart,
     faPlus,
     faPoll,
     faUser,
-    faSearch
+    faSearch,
+    faLink
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
 
 /**
  * The following block of code may be used to automatically register your
