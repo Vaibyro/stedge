@@ -11,12 +11,12 @@
 |
 */
 
-
+Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'tokenview'], function(){
     Route::get('/', 'HomeController@root')->name('root');
-    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/test', 'TestController@index')->name('test');
     Route::get('/profile', 'UserController@profile')->name('profile');
+    Route::get('/user/{id}', 'UserController@info')->name('user');
     Route::post('/profile', 'UserController@update_avatar');
     Route::get('/circles', 'CircleController@configure')->name('circles');
     Route::get('/post/{id}', 'PostController@view')->name('post');

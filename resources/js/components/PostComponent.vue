@@ -1,156 +1,138 @@
 <template id="post-component">
-    <div v-bind:class="{ solved: (state.id == 2), closed: (state.id == 3) }" class="pane">
-        <div class="row mb-2">
-            <div class="col">
-                <span v-if="user" class="mr-2"><img class="border rounded-circle" :src="user.avatar_small_url" width="30" /></span>
-                <span class="h6">
-                <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
-                    <a class="mr-2" href="#" v-if="user">@{{ user.name }}</a>
-                </span>
+    <div>
+        <div v-bind:class="{ solved: (state.id == 2), closed: (state.id == 3) }" class="pane">
+            <div class="row mb-2">
+                <div class="col">
+                    <span v-if="user" class="mr-2">
+                        <img class="border rounded-circle" :src="user.avatar_small_url" width="30"/>
+                    </span>
 
-                <span v-if="!full_display">
-                    <span class="mx-2">&#8226;</span>
-                    <a v-if="!full_display" :href="post_view_route + '/' + id">
-                         <font-awesome-icon icon="link" /> Voir
-                    </a>
-                </span>
-            </div>
+                    <span class="h6">
+                        <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
+                        <a class="mr-2" :href="users_info_route + '/' + user.id" v-if="user">@{{ user.name }}</a>
+                    </span>
 
-            <!-- right -->
-            <div class="col-4 text-right">
-                <span class="mr-2"><small>{{ date }}</small></span>
-                <span v-if="circle">
-                    <span v-if="this.isPublic" class="badge badge-gd-info"><font-awesome-icon icon="globe"/> Public</span>
-                    <span v-else class="badge badge-gd-success"><font-awesome-icon icon="user-friends" /> {{ circle.name }}</span>
-                </span>
+                    <span v-if="!full_display">
+                        <!-- Link if thread on the newsfeed -->
+                        <span class="mx-2">&#8226;</span>
+                        <a :href="post_view_route + '/' + id"><font-awesome-icon icon="link"/> Voir</a>
+                    </span>
+                </div>
 
-                <span class="dropdown" v-if="isme">
-                    <button class="badge badge-tool dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <font-awesome-icon icon="cog" />
+                <!-- right -->
+                <div class="col-4 text-right">
+                    <span class="mr-2"><small>{{ date }}</small></span>
+                    <span v-if="circle">
+                        <span v-if="this.isPublic" class="badge badge-gd-info">
+                            <font-awesome-icon icon="globe"/> Public
+                        </span>
+                        <span v-else class="badge badge-gd-success">
+                            <font-awesome-icon icon="user-friends"/> {{ circle.name }}
+                        </span>
+                    </span>
+
+                    <span class="dropdown" v-if="isme">
+                    <button class="badge badge-tool dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <font-awesome-icon icon="cog"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">Editer</a>
-                        <a class="dropdown-item" href="#">Supprimer</a>
+                        <a class="dropdown-item" href="#" @click="remove()">Supprimer</a>
                     </div>
                 </span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <span class="badge badge-secondary" :data-toggle="'t-' + id" data-placement="top" :title="'W:' + weight">dev (E: {{emergency}})</span>
+            <div class="row">
+                <div class="col">
+                <span class="badge badge-secondary" :data-toggle="'t-' + id" data-placement="top"
+                      :title="'W:' + weight">dev (E: {{emergency}})</span>
 
-                <!-- tags -->
-                <a class="badge badge-gd-primary mr-1" href="#" v-for="tag in tags">{{ tag.hash_name }}</a>
+                    <!-- tags -->
+                    <span class="badge badge-gd-primary mr-1" href="#" v-for="tag in tags">{{ tag.hash_name }}</span>
+                </div>
             </div>
-        </div>
-        <hr>
+            <hr>
 
-        <!-- content -->
-        <p>{{ content }}</p>
+            <!-- content -->
+            <p>{{ content }}</p>
 
-
-
-        <!-- answers -->
-        <div v-if="answers">
-            <answer-component
-                    v-for="answer in answersToDisplay"
-                    v-bind:answer="answer">
-            </answer-component>
-            <div v-if="answers.length > countAnswersToDisplay && !allAnswers" class="text-center">
-                <button class="btn btn-link btn-sm" @click="displayAllAnswers()">Afficher la suite</button>
+            <!-- answers -->
+            <div v-if="answers">
+                <answer-component
+                        :api_token="api_token"
+                        :likes_route="likes_route"
+                        :posts_route="posts_route"
+                        :answers_route="answers_route"
+                        :frozen="state.id != 1"
+                        v-for="answer in answersToDisplay"
+                        v-bind:answer="answer"
+                        @approbation="load()"
+                ></answer-component>
+                <div v-if="answers.length > countAnswersToDisplay && !allAnswers" class="text-center">
+                    <button class="btn btn-link btn-sm" @click="displayAllAnswers()">Afficher la suite - {{
+                        answers.length - 1 }} réponse(s)
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <hr>
+            <div v-if="!full_display">
+                <hr>
 
-        <div class="input-group">
-            <input type="text"
-                   class="form-control answer-box"
-                   placeholder="Votre réponse rapide..."
-                   aria-label="Username"
-                   aria-describedby="basic-addon1"
-                   v-model="currentAnswer"
-                   v-on:keyup.enter="add()"
-                   ref="textboxAnswer"/>
+                <!-- quick answer -->
+                <div class="input-group">
+                    <!-- quick answer input -->
+                    <input type="text"
+                           class="form-control answer-box"
+                           placeholder="Votre réponse rapide..."
+                           aria-label="Username"
+                           aria-describedby="basic-addon1"
+                           v-model="currentAnswer"
+                           v-on:keyup.enter="add()"
+                           ref="textboxAnswer"/>
 
-            <div class="input-group-append">
-                <v-popover>
-                    <!-- This will be the popover target (for the events and position) -->
-                    <button>:)</button>
-                    <div slot="popover">
-                        <VEmojiPicker
-                                :pack="pack"
-                                labelSearch="Rechercher..."
-                                @select="selectEmoji">
-                        </VEmojiPicker>
+                    <!-- emoji button -->
+                    <div class="input-group-append">
+                        <v-popover class="input-group-text emoji-inpput-box">
+                            <button>
+                                <font-awesome-icon icon="smile"/>
+                            </button>
+                            <div slot="popover">
+                                <VEmojiPicker
+                                        :pack="pack"
+                                        labelSearch="Rechercher..."
+                                        @select="selectEmoji">
+                                </VEmojiPicker>
+                            </div>
+                        </v-popover>
                     </div>
-                </v-popover>
+
+                    <!-- answer button -->
+                    <div class="input-group-append">
+                        <button class="btn btn-gd-primary" type="button" @click="add()">Répondre</button>
+                    </div>
+                </div>
             </div>
-
-
-            <div class="input-group-append">
-                <button class="btn btn-gd-primary" type="button" @click="add()">Répondre</button>
-            </div>
-
-
         </div>
+
+        <!-- Il full answer -->
+        <full-answer-box
+                v-if="full_display"
+                placeholder="Votre réponse..."
+                @answer="otest()"
+        ></full-answer-box>
     </div>
 </template>
-
-<style lang="scss">
-
-    .answer-box {
-        border: none;
-        background-color: #eeeeee;
-        border-radius: 25px;
-    }
-
-    .tooltip {
-        // ...
-        display: block !important;
-        .wrapper {
-            // Reset bootstrap
-            max-width: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        &.popover {
-            $color: #f9f9f9;
-            max-width: none;
-            .popover-inner {
-                background: $color;
-                color: #dadada;
-                //padding: 24px;
-                border-radius: 5px;
-                box-shadow: 0 5px 30px rgba(black, .1);
-                max-width: none;
-            }
-
-            .popover-arrow {
-                border-color: $color;
-            }
-        }
-    }
-
-    .closed {
-        border: 1px solid #d50700;
-    }
-
-    .solved {
-        border: 1px solid #0dc600;
-        background-color: #e3fcee;
-    }
-</style>
 
 <script>
     import Vue from 'vue';
     import VTooltip from 'v-tooltip';
 
-    Vue.directive('v-tooltip',  VTooltip);
+    Vue.directive('v-tooltip', VTooltip);
     import VEmojiPicker from 'v-emoji-picker';
     import packData from 'v-emoji-picker/data/emojis.json';
     import moment from 'moment'
+
     moment.locale('fr');
 
     export default {
@@ -159,10 +141,12 @@
             posts_route: String,
             feed_route: String,
             post_view_route: String,
+            users_info_route: String,
             answers_route: String,
             coeff: Number,
             api_token: String,
-            full_display: Boolean
+            full_display: Boolean,
+            likes_route: String,
         },
 
         data() {
@@ -192,6 +176,10 @@
 
         methods: {
 
+            otest: function () {
+                console.log("etqt");
+            },
+
             /**
              * Click on emoji keyboard
              * @param emoji
@@ -214,13 +202,13 @@
             /**
              * Add an answer
              */
-            add: function() {
+            add: function () {
                 axios.post(this.answers_route, {
                     message: this.currentAnswer,
                     post_id: this.id
                 }, {
                     headers: {
-                        'Authorization':'Bearer ' + this.api_token,
+                        'Authorization': 'Bearer ' + this.api_token,
                     }
                 }).then((response) => {
                     this.allAnswers = true;
@@ -231,6 +219,22 @@
                     .catch((e) => {
                         console.error(e);
                     })
+            },
+
+            /**
+             * Remove the post
+             */
+            remove: function () {
+                axios.delete(this.posts_route + '/' + this.id, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.api_token,
+                    }
+                }).then((response) => {
+                    this.$destroy();
+                    this.$el.parentNode.removeChild(this.$el);
+                }).catch((e) => {
+                    console.error(e.response);
+                })
             },
 
             /**
@@ -248,7 +252,7 @@
                 axios
                     .get(this.posts_route + '/' + this.id, {
                         headers: {
-                            'Authorization':'Bearer ' + this.api_token,
+                            'Authorization': 'Bearer ' + this.api_token,
                         }
                     })
                     .then(response => {
@@ -284,7 +288,7 @@
                 axios
                     .get(this.feed_route + '/' + this.id, {
                         headers: {
-                            'Authorization':'Bearer ' + this.api_token,
+                            'Authorization': 'Bearer ' + this.api_token,
                         }
                     })
                     .then(response => {

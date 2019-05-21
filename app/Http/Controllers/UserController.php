@@ -24,6 +24,11 @@ class UserController extends Controller {
         return view('profile', compact('user', $user));
     }
 
+    public function info($id) {
+        $user = User::findOrFail($id);
+        return view('user', compact('user', $user));
+    }
+
     public function update_avatar(Request $request) {
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

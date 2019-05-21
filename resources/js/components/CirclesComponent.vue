@@ -1,6 +1,6 @@
 <template id="circles-component">
-    <div class="pane">
-        <h5> <font-awesome-icon icon="users" /> Cercles</h5>
+    <div class="lateral-pane">
+        <h6> <font-awesome-icon icon="users" /> Cercles</h6>
         <hr>
         <ul  class="menu">
             <li v-for="circle in circlesList" v-bind:key="circle.id">
@@ -15,7 +15,11 @@
 
             </li>
         </ul>
-        <a class="" href="circles">Gérer mes cercles</a>
+        <hr>
+        <div class="text-center">
+            <small><a class="" href="circles">Gérer mes cercles</a></small>
+        </div>
+
     </div>
 
 

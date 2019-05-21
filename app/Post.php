@@ -27,4 +27,8 @@ class Post extends Model {
     public function circle() {
         return $this->belongsTo('App\Circle');
     }
+
+    public function bestAnswer() {
+        return $this->hasOne('App\Answer', 'id', 'answer_id');
+    }
 }

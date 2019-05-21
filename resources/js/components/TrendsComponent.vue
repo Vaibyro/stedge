@@ -1,21 +1,30 @@
 <template id="trends-component">
-    <div class="pane mb-2">
+    <div class="lateral-pane">
         <h5>
             <font-awesome-icon icon="poll"/>
             A la une
         </h5>
         <hr>
-        <ul  class="menu">
-            <li v-for="trend in trendsList" v-bind:key="trend.id">
-                {{ trend.name }} {{ trend.posts_count }}
-            </li>
-        </ul>
-        <a class="" href="circles">Voir plus</a>
-
-
+        <div>
+            <div class="row">
+                <div class="col">
+                    <span class="bold">Catégorie</span>
+                </div>
+                <div class="col text-right">
+                    <span class="bold"># Sujets</span>
+                </div>
+            </div>
+            <div class="row" v-for="trend in trendsList" v-bind:key="trend.id">
+                <div class="col">
+                    <font-awesome-icon icon="hashtag"/>
+                    {{ trend.name }}
+                </div>
+                <div class="col text-right">
+                    {{ trend.posts_count }}
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </template>
 
 
@@ -23,6 +32,7 @@
     export default {
         props: {
             api_token: String,
+            trends_route: String,
             user_id: String
         },
 
@@ -38,16 +48,15 @@
              */
             load: function () {
                 axios
-                    .get('api/tags/trends', {
+                    .get(this.trends_route, {
                         headers: {
-                            'Authorization':'Bearer ' + this.api_token,
+                            'Authorization': 'Bearer ' + this.api_token,
                         },
                     })
                     .then(response => {
                         this.trendsList = response.data.data;
                     }).catch((e) => {
                     console.error(e);
-
                 })
             },
         },

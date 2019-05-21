@@ -6,6 +6,7 @@ use App\Answer;
 use App\Http\Resources\AnswerResource;
 use App\Http\Resources\TagResource;
 use App\Tag;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,12 +34,12 @@ class AnswerController extends Controller {
      *
      * @param \Illuminate\Http\Request $request
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function store(Request $request) {
         // Public user check
         if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
-            throw new \Exception('Public user cannot post.');
+            throw new Exception('Public user cannot post.');
         }
 
         $answer = new Answer();
@@ -87,9 +88,26 @@ class AnswerController extends Controller {
      * Remove the specified resource from storage.
      *
      * @param \App\Answer $answer
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws Exception
      */
     public function destroy(Answer $answer) {
-        //
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new Exception('Public user cannot remove.');
+        }
+
+        if($answer->user != Auth::user()) {
+            throw new Exception('Cannot delete others answers.');
+        }
+
+        if($answer->post->state->id != env('DEFAULT_STATE_ID', 1)) {
+            throw new Exception('Thread is not open, cannot delete answer.');
+        }
+
+        $answer->delete();
+
+        return [
+            'state' => 'Answer deleted'
+        ];
     }
 }

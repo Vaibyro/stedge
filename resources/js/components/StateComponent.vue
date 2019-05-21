@@ -1,36 +1,50 @@
 <template id="state-component">
-    <div class="pane">
-        <h5><font-awesome-icon icon="check" /> Etat</h5>
+    <div class="lateral-pane">
+        <h6><font-awesome-icon icon="check" /> Etat</h6>
         <hr>
         <ul class="menu">
             <li>
                 <label class="pane-c">
-                    <input type="checkbox"
+                    <input type="radio"
+                           id="all"
+                           name="state"
+                           value=""
+                           v-model="statesFilter"
+                           @change="changeStateFilter()"
+                    /> Tous
+                </label>
+            </li>
+            <li>
+                <label class="pane-c">
+                    <input type="radio"
                            id="waiting"
+                           name="state"
                            value="waiting"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
-                           checked="checked"/> En attente
+                    /> En attente
                 </label>
             </li>
             <li>
                 <label class="pane-c solved">
-                    <input type="checkbox"
+                    <input type="radio"
                            id="solved"
+                           name="state"
                            value="solved"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
-                           checked="checked"/> Résolu
+                    /> Résolu
                 </label>
             </li>
             <li>
                 <label class="pane-c closed">
-                    <input type="checkbox"
+                    <input type="radio"
                            id="closed"
+                           name="state"
                            value="closed"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
-                           checked="checked"/> Fermé
+                           checked="checked"/> Verouillé
                 </label>
             </li>
         </ul>
@@ -70,7 +84,7 @@
         data() {
             return {
                 states: [],
-                statesFilter: []
+                statesFilter: ""
             }
         },
 

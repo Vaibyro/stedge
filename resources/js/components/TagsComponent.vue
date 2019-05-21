@@ -1,9 +1,6 @@
 <template id="tags-component">
-    <div class="pane">
-        <h5>
-            <font-awesome-icon icon="hashtag"/>
-            Sujets
-        </h5>
+    <div class="lateral-pane">
+        <h6><font-awesome-icon icon="hashtag"/> Sujets</h6>
         <hr>
         <ul class="menu">
             <li v-for="tag in tagsList" v-bind:key="tag.id">

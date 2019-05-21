@@ -45,6 +45,10 @@ class FeedController extends Controller {
             $posts = $posts->whereIn('post_tag.tag_id', $tags);
         }
 
+        if(isset($request->user_id) && is_numeric($request->user_id)) {
+            $posts = $posts->where('posts.user_id', "=", $request->user_id);
+        }
+
         // Limit the amount
         $posts = $posts->limit(1000);
 

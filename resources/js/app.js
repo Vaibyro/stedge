@@ -25,7 +25,10 @@ import {
     faPoll,
     faUser,
     faSearch,
-    faLink
+    faLink,
+    faSmile,
+    faChevronLeft,
+    faAt
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -42,7 +45,10 @@ library.add(faHeart,
     faPoll,
     faUser,
     faSearch,
-    faLink
+    faLink,
+    faSmile,
+    faChevronLeft,
+    faAt
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

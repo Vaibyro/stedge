@@ -16,7 +16,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-    <link rel="shortcut icon" href="{{ asset('storage/img/icon.svg') }}">
+    <link rel="shortcut icon" href="{{ asset('storage/img/icon_m-01.svg') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -25,11 +25,10 @@
 <body>
 <div id="app">
     <div id="root">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-
-                    <img src="{{ asset('storage/img/logo_margin.svg') }}" width="120"/>
+                    <img src="{{ asset('storage/img/icon.svg') }}" style="width: 30px;"/>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -39,14 +38,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><font-awesome-icon icon="search"></font-awesome-icon></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Rechercher" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control search-box" placeholder="Rechercher" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -63,7 +60,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <!-- Avatar -->
                                     <img class="border rounded-circle mr-2" src="{{ asset('storage/avatars/' . Auth::user()->avatar) }}" width="30" />
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -72,13 +69,13 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{ route('profile') }}">
-                                        <font-awesome-icon icon="user"></font-awesome-icon> Profil
+                                        <font-awesome-icon icon="user"></font-awesome-icon> {{ __('Profil') }}
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <font-awesome-icon icon="user"></font-awesome-icon> {{ __('Logout') }}
+                                        <font-awesome-icon icon="user"></font-awesome-icon> {{ __('Se deconnecter') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

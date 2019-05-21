@@ -28,6 +28,11 @@ class CircleController extends Controller
         return new CircleResource(Tag::all());
     }
 
+    public function users($id) {
+        $circle = Circle::findOrFail($id);
+        return $circle->users;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -35,18 +40,28 @@ class CircleController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     * @throws \Exception
      */
     public function store(Request $request)
     {
-        //
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new \Exception('Public user cannot post.');
+        }
+
+        $user = Auth::user();
+        $circle = new Circle();
+        $circle->name = $request->name;
+        $circle->user_id = $user->id;
+        $circle->save();
+        $user->circles()->attach($circle);
     }
 
     /**

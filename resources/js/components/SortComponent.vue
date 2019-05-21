@@ -1,9 +1,6 @@
 <template id="sort-component">
-    <div class="pane">
-        <h5>
-            <font-awesome-icon icon="sort"/>
-            Tri
-        </h5>
+    <div class="lateral-pane">
+        <h6><font-awesome-icon icon="sort"/> Tri</h6>
         <hr>
         <div class="form-group">
             <select id="sort-dropbox" class="custom-select" v-model="sortMethod"

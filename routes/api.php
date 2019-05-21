@@ -19,6 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/tags/trends/', 'TrendsController@index')->name('trends');
+
+    Route::get('/circles/{id}/users/', 'CircleUsersController@index')->name('indexCircleUsers');
+    Route::post('/circles/{id}/users/', 'CircleUsersController@store')->name('storeircleUsers');
+
+    Route::post('/posts/{postId}/best', 'PostController@approbe')->name('approbe');
     Route::get('/feed', 'FeedController@index')->name('feed');
     Route::apiResources([
         'tags' => 'TagController',
@@ -26,7 +31,8 @@ Route::middleware(['auth:api'])->group(function () {
         'posts' => 'PostController',
         'answers' => 'AnswerController',
         'users' => 'UserController',
-        'circles' => 'CircleController'
+        'circles' => 'CircleController',
+        'likes' => 'LikeController'
     ]);
 });
 

@@ -40,6 +40,32 @@ class PostController extends Controller {
         //
     }
 
+
+    public function approbe($postId, Request $request) {
+        // Public user check
+        if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
+            throw new \Exception('Public user cannot post.');
+        }
+
+        $answerId = $request->answer_id;
+        $post = Post::findOrFail($postId);
+        $answer = Answer::findOrFail($answerId);
+        // check
+        if($post->user != Auth::user()) {
+            throw new \Exception("Cannot make approbation for others posts");
+        }
+
+        if($answer->post->id != $post->id) {
+            throw new \Exception("This answer is not from this post");
+        }
+
+        $post->answer_id = $answerId;
+        $post->state_id = 2; // change state id
+        $post->save();
+
+        return ['answer_id' => $answerId, 'state' => 'Answer approbated'];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -129,7 +155,7 @@ class PostController extends Controller {
      */
     public function destroy($id) {
         if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
-            throw new \Exception('Public user cannot post.');
+            throw new \Exception('Public user cannot remove.');
         }
 
         $post = Post::find($id);

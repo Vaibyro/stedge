@@ -23,6 +23,7 @@ class PostResource extends JsonResource
             'state'  => new StateResource($this->state),
             'tags' => new PostTagsRelationshipResource($this->tags),
             'answers' => new PostAnswersRelationshipResource($this->answers),
+            'best_answer' => new AnswerResource($this->bestAnswer),
             'is_public' => $this->circle_id == env('PUBLIC_CIRCLE_ID', 1),
             'is_it_me' => $this->user_id == Auth::user()->id,
             'circle' => new CircleResource($this->circle),

@@ -1,13 +1,18 @@
 <template id="posts-component">
     <div>
-        <div class="pane mb-3">
-            <h6><font-awesome-icon icon="plus" /> Nouveau sujet</h6>
-            <hr>
+        <div class="pane mb-3" v-if="display_posting">
             <div>
                 <div class="form-group">
-                    <textarea class="form-control" v-model="currentPost" placeholder="Posez une question..."></textarea>
-                </div>
+                    <textarea-autosize
+                            class="form-control question-box"
+                            placeholder="Posez une question..."
+                            ref="questionBox"
+                            v-model="currentPost"
+                            :min-height="30"
+                            :max-height="350"
+                    ></textarea-autosize>
 
+                </div>
                 <!--
                 <vue-tags-input
                         v-model="tag"
@@ -15,10 +20,20 @@
                         @tags-changed="newTags => tags = newTags">
                 </vue-tags-input>
                 -->
-
             </div>
-            <div>
-                <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <!--
+                    <vue-tags-input
+                            :tags="tags"
+                    ></vue-tags-input> -->
+                </div>
+                <div class="col-4 text-right">
+                    <button class="btn btn-gd-primary"><font-awesome-icon icon="smile"/></button>
+                    <button class="btn btn-gd-primary">GIF</button>
+                    <button class="btn btn-gd-primary" @click="add()">Envoyer</button>
+                </div>
             </div>
 
         </div>
@@ -27,11 +42,13 @@
         <div ref="posts">
             <transition-group name="slide-fade">
                 <post-component
+                        :likes_route="likes_route"
                         v-for="post in currentPosts"
                         v-bind:key="post.id"
                         v-bind:id="post.id"
                         v-bind:coeff="post.coeff"
                         :posts_route="posts_route"
+                        :users_info_route="users_info_route"
                         :feed_route="feed_route"
                         :post_view_route="post_view_route"
                         :answers_route="answers_route"
@@ -43,16 +60,17 @@
         </div>
 
         <div class="text-center">
-            Fin du fil d'actualité
+            <hr>
+            Fin des sujets
         </div>
 
     </div>
 </template>
 
-
 <script>
     import PostComponent from "./PostComponent";
     import VueTagsInput from '@johmun/vue-tags-input';
+    import VueTextareaAutosize from 'vue-textarea-autosize'
 
     export default {
         props: {
@@ -61,7 +79,17 @@
             feed_route: String,
             post_view_route: String,
             answers_route: String,
-            tagsFilter: Array
+            likes_route: String,
+            tagsFilter: Array,
+            users_info_route: String,
+            display_posting: {
+                default: true,
+                type: Boolean
+            },
+            user_filter: {
+                default: null,
+                type: String
+            }
         },
 
         data() {
@@ -104,9 +132,21 @@
                     let newId = response.data.id;
                     let ComponentClass = Vue.extend(PostComponent);
                     let instance = new ComponentClass({
-                        propsData: { id: newId, key: newId, coeff: 1, api_token: this.api_token }
+                        propsData: {
+                            id: newId,
+                            key: newId,
+                            coeff: 1,
+                            api_token: this.api_token,
+                            likes_route: this.likes_route,
+                            users_info_route: this.users_info_route,
+                            feed_route: this.feed_route,
+                            answers_route: this.answers_route,
+                            full_display: false,
+                            posts_route: this.posts_route
+                        }
                     });
                     instance.$mount(); // pass nothing
+                    instance.$el.classList.add('mb-3');
                     this.$refs.posts.insertBefore(instance.$el, this.$refs.posts.firstChild);
                 })
                     .catch((e) => {
@@ -139,11 +179,12 @@
                         params: {
                             'circles': this.circleFilter.join(','),
                             'tags': this.tagFilter.join(','),
-                            'sort': this.sortMethod
+                            'sort': this.sortMethod,
+                            'user_id': this.user_filter
                         }
                     })
                     .then(response => {
-                        console.log(response);
+
                         this.posts = response.data.data.posts;
                         if (this.posts.length < this.intialPostsCount) {
                             this.currentPosts = this.posts.slice(0, this.posts.length);
@@ -152,10 +193,8 @@
                             this.currentPosts = this.posts.slice(0, this.intialPostsCount);
                             this.currentCount = this.intialPostsCount;
                         }
-
                     }).catch((e) => {
-                    console.error(e);
-
+                    console.log(e.response);
                 })
             }
         },

@@ -45,6 +45,21 @@ class User extends Authenticatable {
         return $this->hasMany('App\Post');
     }
 
+    public function answers() {
+        return $this->hasMany('App\Answer');
+    }
+
+    public function likes() {
+        return $this->hasMany('App\Like');
+    }
+
+    public function avatarUrl(bool $small = false) {
+        if($small) {
+            return asset('storage/avatars_small/' . $this->avatar);
+        }
+        return asset('storage/avatars/' . $this->avatar);
+    }
+
     public function setNewApiToken() {
         $this->api_token = Str::uuid();
         $this->save();
