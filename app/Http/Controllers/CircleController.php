@@ -14,7 +14,8 @@ class CircleController extends Controller
 {
 
     public function configure() {
-        return view('circles');
+        $circles = Auth::user()->circles;
+        return view('circles', ['circles' => $circles]);
     }
 
     /**
@@ -106,6 +107,17 @@ class CircleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $circle = Circle::find($id);
+
+        /*
+        $circle->users()->detach();
+
+        // Make all posts public
+        foreach ($circle->posts as $post) {
+            $post->circle_id = env('PUBLIC_CIRCLE_ID', 1);
+        }
+*/
+        $circle->delete();
+        return ['state' => 'ok'];
     }
 }

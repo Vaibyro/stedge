@@ -28,11 +28,14 @@
             <div class="col">
                 <posts-component
                         api_token="{{ $api_token }}"
+                        user_id="{{ $user_id }}"
                         posts_route="{{ route('posts.index') }}"
                         post_view_route="{{ route('post', '') }}"
                         answers_route="{{ route('answers.index') }}"
                         likes_route="{{ route('likes.index') }}"
                         feed_route="{{ route('feed') }}"
+                        users_route="{{ route('users.index') }}"
+                        tags_route="{{ route('tags.index') }}"
                         users_info_route="{{ route('user', '') }}"
                 ></posts-component>
             </div>

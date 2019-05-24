@@ -4,7 +4,7 @@
             <div class="row mb-2">
                 <div class="col">
                     <span v-if="user" class="mr-2">
-                        <img class="border rounded-circle" :src="user.avatar_small_url" width="30"/>
+                        <img class="border rounded-circle" :src="user.avatar_small_url" width="50"/>
                     </span>
 
                     <span class="h6">
@@ -37,7 +37,7 @@
                         <font-awesome-icon icon="cog"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Editer</a>
+                        <!-- <a class="dropdown-item" href="#">Editer</a> -->
                         <a class="dropdown-item" href="#" @click="remove()">Supprimer</a>
                     </div>
                 </span>
@@ -45,8 +45,11 @@
             </div>
             <div class="row">
                 <div class="col">
+
+                    <!--
                 <span class="badge badge-secondary" :data-toggle="'t-' + id" data-placement="top"
                       :title="'W:' + weight">dev (E: {{emergency}})</span>
+                      -->
 
                     <!-- tags -->
                     <span class="badge badge-gd-primary mr-1" href="#" v-for="tag in tags">{{ tag.hash_name }}</span>
@@ -59,19 +62,23 @@
 
             <!-- answers -->
             <div v-if="answers">
-                <answer-component
-                        :api_token="api_token"
-                        :likes_route="likes_route"
-                        :posts_route="posts_route"
-                        :answers_route="answers_route"
-                        :frozen="state.id != 1"
-                        v-for="answer in answersToDisplay"
-                        v-bind:answer="answer"
-                        @approbation="load()"
-                ></answer-component>
-                <div v-if="answers.length > countAnswersToDisplay && !allAnswers" class="text-center">
-                    <button class="btn btn-link btn-sm" @click="displayAllAnswers()">Afficher la suite - {{
-                        answers.length - 1 }} réponse(s)
+                <transition-group name="slide-fade">
+                    <answer-component
+                            :api_token="api_token"
+                            :likes_route="likes_route"
+                            :posts_route="posts_route"
+                            :answers_route="answers_route"
+                            :users_info_route="users_info_route"
+                            :frozen="state.id != 1"
+                            v-for="answer in answersToDisplay"
+                            v-bind:key="answer.id"
+                            v-bind:answer="answer"
+                            @approbation="load()"
+                    ></answer-component>
+                </transition-group>
+                <div v-if="!full_display && !allAnswers && answers.length > countAnswersToDisplay" class="text-center">
+                    <button class="btn btn-link btn-sm" @click="displayAllAnswers()">Afficher la suite -
+                        {{ answers.length - 1 }} réponse(s)
                     </button>
                 </div>
             </div>
@@ -116,12 +123,39 @@
         </div>
 
         <!-- Il full answer -->
-        <full-answer-box
-                v-if="full_display"
-                placeholder="Votre réponse..."
-                @answer="otest()"
-        ></full-answer-box>
-    </div>
+        <div class="pane mt-3" v-if="full_display">
+                <!-- quick answer input -->
+                <textarea-autosize
+                        ref="textboxAnswer"
+                        class="form-control question-box"
+                        placeholder="Votre réponse..."
+                        v-model="currentAnswer"
+                        :min-height="30"
+                        :max-height="350"
+                ></textarea-autosize>
+
+                <hr>
+
+                <!-- answer button -->
+                <div class="text-right">
+                    <v-popover class="d-inline-block">
+                        <button class="btn btn-gd-primary">
+                            <font-awesome-icon icon="smile"/>
+                        </button>
+                        <div slot="popover">
+                            <VEmojiPicker
+                                    :pack="pack"
+                                    labelSearch="Rechercher..."
+                                    @select="selectEmoji">
+                            </VEmojiPicker>
+                        </div>
+                    </v-popover>
+                    <button class="btn btn-gd-primary" type="button" @click="add()">Répondre</button>
+                </div>
+
+            </div>
+
+        </div>
 </template>
 
 <script>
@@ -185,7 +219,7 @@
              * @param emoji
              */
             selectEmoji(emoji) {
-                let tbox = this.$refs.textboxAnswer;
+                let tbox = this.full_display ? this.$refs.textboxAnswer.$el : this.$refs.textboxAnswer;
                 let emojiCode = emoji.emoji;
                 let cursorPosition = tbox.selectionStart;
                 this.currentAnswer = this.currentAnswer.substring(0, cursorPosition)

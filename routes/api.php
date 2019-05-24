@@ -21,7 +21,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/tags/trends/', 'TrendsController@index')->name('trends');
 
     Route::get('/circles/{id}/users/', 'CircleUsersController@index')->name('indexCircleUsers');
-    Route::post('/circles/{id}/users/', 'CircleUsersController@store')->name('storeircleUsers');
+    Route::post('/circles/{id}/users/', 'CircleUsersController@store')->name('storeCircleUsers');
+    Route::delete('/circles/{id}/users/', 'CircleUsersController@destroy')->name('destroyCircleUsers');
 
     Route::post('/posts/{postId}/best', 'PostController@approbe')->name('approbe');
     Route::get('/feed', 'FeedController@index')->name('feed');

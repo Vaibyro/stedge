@@ -36,7 +36,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                    <!-- Left Side Of Navbar
                     <ul class="navbar-nav mr-auto">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -45,17 +45,17 @@
                             <input type="text" class="form-control search-box" placeholder="Rechercher" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </ul>
-
+ -->
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Connexion') }}</a>
+                                <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Connexion') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Inscription') }}</a>
+                                    <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Inscription') }}</a>
                                 </li>
                             @endif
                         @else
@@ -75,7 +75,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <font-awesome-icon icon="user"></font-awesome-icon> {{ __('Se deconnecter') }}
+                                        {{ __('Se deconnecter') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

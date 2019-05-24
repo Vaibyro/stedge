@@ -6,7 +6,6 @@
             <li>
                 <label class="pane-c">
                     <input type="radio"
-                           id="all"
                            name="state"
                            value=""
                            v-model="statesFilter"
@@ -17,9 +16,9 @@
             <li>
                 <label class="pane-c">
                     <input type="radio"
-                           id="waiting"
+                           id="1"
                            name="state"
-                           value="waiting"
+                           value="1"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
                     /> En attente
@@ -28,25 +27,28 @@
             <li>
                 <label class="pane-c solved">
                     <input type="radio"
-                           id="solved"
+                           id="2"
                            name="state"
-                           value="solved"
+                           value="2"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
                     /> Résolu
                 </label>
             </li>
+
+            <!--
             <li>
                 <label class="pane-c closed">
                     <input type="radio"
-                           id="closed"
+                           id="3"
                            name="state"
-                           value="closed"
+                           value="3"
                            v-model="statesFilter"
                            @change="changeStateFilter()"
                            checked="checked"/> Verouillé
                 </label>
             </li>
+            -->
         </ul>
     </div>
 

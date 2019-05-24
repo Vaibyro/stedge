@@ -8,6 +8,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import 'multiselect';
+
 @mixin transition($x...){
   -webkit-transition: $x;
   -moz-transition: $x;
@@ -300,4 +302,9 @@ body {
 
 .vue-tags-input .ti-deletion-mark:after {
   transform: scaleX(1);
+}
+
+.dropdown-menu {
+  box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.16);
+  z-index: 999998;
 }

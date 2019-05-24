@@ -3,10 +3,10 @@
 
         <div class="row">
             <div class="col">
-                <span v-if="user"><img class="border rounded-circle" :src="user.avatar_small_url" width="30"/></span>
+                <span v-if="user"><img class="border rounded-circle mr-2" :src="user.avatar_small_url" width="40"/></span>
                 <span class="bold" v-if="user">{{ user.firstname }} {{ user.lastname }}</span>
                 <!-- todo user page -->
-                <a href="#" v-if="user">@{{ user.name }}</a>
+                <a :href="users_info_route + '/' + user.id" v-if="user">@{{ user.name }}</a>
 
                 <!-- likes bar -->
                 <div class="ml-2 d-inline" v-if="!frozen">
@@ -33,7 +33,7 @@
                         <font-awesome-icon icon="cog"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Editer</a>
+                        <!-- <a class="dropdown-item" href="#">Editer</a> -->
                         <a class="dropdown-item" href="#" @click="removeAnswer()">Supprimer</a>
                     </div>
                 </span>
@@ -68,6 +68,7 @@
             answer: Object,
             likes_route: String,
             answers_route: String,
+            users_info_route: String,
             posts_route: String,
             api_token: null,
             frozen: {

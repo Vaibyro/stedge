@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class UserCirclesResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             'lastname' => $this->lastname,
             'avatar_url' => asset('storage/avatars/' . $this->avatar),
             'avatar_small_url' => asset('storage/avatars_small/' . $this->avatar),
-            'link' => route('user', $this->id)
+            'link' => route('user', $this->id),
+            'circles' => new UserCirclesRelationshipResource($this->circles)
         ];
     }
 }

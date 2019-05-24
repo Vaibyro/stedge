@@ -40,11 +40,18 @@ class FeedController extends Controller {
             $posts = $posts->whereIn('posts.circle_id', $circles);
         }
 
+        // Tags
         if(isset($request->tags)) {
             $tags = explode(",", $request->tags);
             $posts = $posts->whereIn('post_tag.tag_id', $tags);
         }
 
+        // Stage filter
+        if(isset($request->state)) {
+            $posts = $posts->where('posts.state_id', '=', $request->state);
+        }
+
+        // By user filter
         if(isset($request->user_id) && is_numeric($request->user_id)) {
             $posts = $posts->where('posts.user_id', "=", $request->user_id);
         }
@@ -93,7 +100,7 @@ class FeedController extends Controller {
      * Display the specified resource.
      *
      * @param $id
-     * @return void
+     * @return array
      */
     public function show($id) {
         $post = DB::table('posts')
@@ -128,54 +135,5 @@ class FeedController extends Controller {
         $hours = $diff->days * 24;
         $hours += $diff->h;
         return round(($hours + 1) * $post->emergency * (10 / ($post->answers_count + 1)));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function store(Request $request) {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Answer $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit() {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param \App\Answer $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Answer $answer) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Answer $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy() {
-        //
     }
 }

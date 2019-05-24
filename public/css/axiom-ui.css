@@ -2396,7 +2396,7 @@ template {
     box-shadow: 0 0 3px 0 rgba(149, 33, 226, 0.6), inset 0 0 0 3px rgba(0, 0, 0, 0.4); }
 
 .btn-gd-primary {
-  background: linear-gradient(135deg, #03a3e2 0%, #0656f1 100%);
+  background: linear-gradient(135deg, #2ec0ab 0%, #0faaaa 100%);
   color: #ffffff;}
   .btn-gd-primary:hover, .btn-gd-primary.hover {
     box-shadow: 0 1px 8px 0 rgba(3, 163, 226, 0.6); }

@@ -14,8 +14,13 @@
                 :full_display="true"
                 posts_route="{{ route('posts.index') }}"
                 answers_route="{{ route('answers.index') }}"
-                api_token="{{ $api_token }}">
-        </post-component>
+                api_token="{{ $api_token }}"
+
+                posts_route="{{ route('posts.index') }}"
+                post_view_route="{{ route('post', '') }}"
+                likes_route="{{ route('likes.index') }}"
+                users_info_route="{{ route('user', '') }}"
+        ></post-component>
 
     </div>
 @endsection

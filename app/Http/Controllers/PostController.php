@@ -40,7 +40,13 @@ class PostController extends Controller {
         //
     }
 
-
+    /**
+     * Approbe an answer
+     * @param $postId
+     * @param Request $request
+     * @return array
+     * @throws \Exception
+     */
     public function approbe($postId, Request $request) {
         // Public user check
         if(auth()->user()->id == env('PUBLIC_USER_ID', 2)) {
@@ -111,8 +117,24 @@ class PostController extends Controller {
             }
         }
 
+        // new tags
+        $newTags = [];
+        if (isset($request->new_tags)) {
+            foreach ($request->new_tags as $newTagName) {
+                $newTag = new Tag();
+                $newTag->name = $newTagName;
+                $newTag->save();
+                $newTag->posts()->attach($post); // attach the post
+                array_push($newTags, ['id' => $post->id, 'name' => $newTagName]);
+            }
+        }
+
         // Return the id
-        return ['id' => $post->id];
+        return [
+            'id' => $post->id,
+            'state' => 'Posted',
+            'new_tags' => $newTags
+        ];
     }
 
     /**

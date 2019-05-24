@@ -23,3 +23,9 @@ Route::group(['middleware' => 'tokenview'], function(){
 });
 
 Auth::routes();
+
+/*
+Route::get('/register', function () {
+    return "Inscription desactivée pour cause de sécurité.";
+});
+*/

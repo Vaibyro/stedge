@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCirclesResource;
+use App\Http\Resources\UsersResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,11 +62,11 @@ class UserController extends Controller {
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return void
+     * @return UsersResource
      */
     public function index(Request $request)
     {
-
+        return new UsersResource(User::where('id', '!=', env('PUBLIC_USER_ID', 2))->get());
     }
 
 
@@ -73,11 +74,11 @@ class UserController extends Controller {
      * Display the specified resource.
      *
      * @param int $id
-     * @return UserResource
+     * @return UserCirclesResource
      */
     public function show($id)
     {
-        return new UserResource(User::find($id));
+        return new UserCirclesResource(User::find($id));
     }
 
 }

@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row" v-for="trend in trendsList" v-bind:key="trend.id">
-                <div class="col">
+                <div class="col-8">
                     <font-awesome-icon icon="hashtag"/>
                     {{ trend.name }}
                 </div>
